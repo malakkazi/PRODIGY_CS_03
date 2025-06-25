@@ -1,5 +1,4 @@
-# PRODIGY_CS_03
-# 🔐 Password Complexity Checker
+# PRODIGY_CS_03 - Password Complexity Checker (Task 03)
 
 This is a simple web application that helps users assess the strength of their passwords in real time.  
 Developed as part of **Task-03** for the **Cybersecurity Internship at Prodigy InfoTech**.
@@ -28,7 +27,7 @@ Developed as part of **Task-03** for the **Cybersecurity Internship at Prodigy I
 
 ## 📷 Screenshot
 
-![Password Checker Screenshot](![pass_complexity1](https://github.com/user-attachments/assets/838fccc5-5de3-4fd3-a888-278c90349a35)
+(![pass_complexity1](https://github.com/user-attachments/assets/838fccc5-5de3-4fd3-a888-278c90349a35)
 )![pass_complexity2](https://github.com/user-attachments/assets/16638224-9e1a-4cfb-8435-1df6545c2c64)
 
 
