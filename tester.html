@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Password Strength Checker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+      background: linear-gradient(135deg, #fdfbfb, #ebedee);
+    }
+
+    .screen {
+        width: 100%;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+
+    /* Welcome Section */
+    #welcomeScreen {
+        display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #0d6efd;
+  color: white;
+  width: 100%;
+  padding: 100px 60px;
+  box-sizing: border-box;
+}
+
+
+    .welcome-text {
+        padding-right: 40px;
+    }
+
+    #welcomeScreen h1 {
+        font-size: 3.5rem;
+  line-height: 1.2;
+  margin-bottom: 30px;
+    }
+
+    #welcomeScreen button {
+        padding: 16px 32px;
+  font-size: 18px;
+  border: none;
+  border-radius: 999px;
+  background: white;
+  color: #0d6efd;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+    }
+
+    #welcomeScreen button:hover {
+      background: #e0e0e0;
+    }
+
+    .welcome-img {
+      flex: 1.2;
+      padding: 60px;
+      text-align: center;
+    }
+
+    .welcome-img img {
+      width: 100%;
+      max-width: 550px;
+      height: auto;
+    }
+
+    /* Checker Section */
+    #checkerScreen {
+      margin-top: 60px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+      color: #333;
+    }
+
+    .card h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      outline: none;
+    }
+
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .toggle input {
+      display: none;
+    }
+
+    .slider {
+      width: 40px;
+      height: 20px;
+      background-color: #ccc;
+      border-radius: 20px;
+      position: relative;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background-color: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s;
+    }
+
+    input:checked + .slider {
+      background-color: #4CAF50;
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(20px);
+    }
+
+    .criteria {
+      display: flex;
+      justify-content: space-around;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    .criteria .met {
+      color: green;
+      font-weight: bold;
+    }
+
+    .strength-bar {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 10px;
+      color: white;
+      font-weight: bold;
+    }
+
+    .weak { background-color: #e74c3c; }
+    .medium { background-color: #f1c40f; }
+    .strong { background-color: #2ecc71; }
+
+    .info, .review {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: left;
+    }
+
+    footer.footer-box {
+      text-align: center;
+      padding: 20px;
+      margin-top: 80px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    @media screen and (max-width: 1024px) {
+      .screen {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .welcome-text {
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      .welcome-img {
+        padding: 20px;
+      }
+
+      #welcomeScreen h1 {
+        font-size: 2.8rem;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      #welcomeScreen h1 {
+        font-size: 2rem;
+      }
+
+      #welcomeScreen button {
+        padding: 12px 24px;
+        font-size: 16px;
+      }
+
+      .welcome-img img {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Welcome Screen -->
+  <div class="screen" id="welcomeScreen">
+    <div class="welcome-text">
+      <h1>How strong is your password?</h1>
+      <button onclick="scrollToChecker()">Get Started</button>
+    </div>
+    <div class="welcome-img">
+      <img src="img/img.PNG" alt="Password Tester Image" />
+    </div>
+  </div>
+
+  <!-- Password Strength Checker -->
+  <div class="screen" id="checkerScreen">
+    <div class="card">
+      <h1>🔒 Password Strength Checker</h1>
+      <div class="input-group">
+        <input type="password" id="passwordBox" placeholder="Enter your password" />
+      </div>
+
+      <div class="toggle">
+        Show Password
+        <label>
+          <input type="checkbox" id="showPassword" />
+          <div class="slider"></div>
+        </label>
+      </div>
+
+      <div class="criteria" id="criteria">
+        <span id="lower">Lowercase</span>
+        <span id="upper">Uppercase</span>
+        <span id="number">Number</span>
+        <span id="symbol">Symbol</span>
+      </div>
+
+      <div class="strength-bar weak" id="strengthBar">No Password</div>
+
+      <div class="info">
+        <div id="charCount">0 characters containing:</div>
+        <div id="crackTime">Crack time: <strong>0 seconds</strong></div>
+      </div>
+
+      <div class="review" id="review">
+        <p><strong>Review:</strong> No password entered.</p>
+        <p>Your password is too weak.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer-box">
+    <p>@MalakKazi | Task-03 (Password Complexity Tester)</p>
+  </footer>
+
+  <script>
+    function scrollToChecker() {
+      document.getElementById('checkerScreen').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const passwordBox = document.getElementById('passwordBox');
+    const showPassword = document.getElementById('showPassword');
+    const strengthBar = document.getElementById('strengthBar');
+    const lower = document.getElementById('lower');
+    const upper = document.getElementById('upper');
+    const number = document.getElementById('number');
+    const symbol = document.getElementById('symbol');
+    const charCount = document.getElementById('charCount');
+    const crackTime = document.getElementById('crackTime');
+    const review = document.getElementById('review');
+
+    showPassword.addEventListener('change', () => {
+      passwordBox.type = showPassword.checked ? 'text' : 'password';
+    });
+
+    passwordBox.addEventListener('input', () => {
+      const password = passwordBox.value;
+      const length = password.length;
+      const hasLower = /[a-z]/.test(password);
+      const hasUpper = /[A-Z]/.test(password);
+      const hasNumber = /\d/.test(password);
+      const hasSymbol = /[^A-Za-z0-9]/.test(password);
+
+      lower.className = hasLower ? 'met' : '';
+      upper.className = hasUpper ? 'met' : '';
+      number.className = hasNumber ? 'met' : '';
+      symbol.className = hasSymbol ? 'met' : '';
+
+      const types = [hasLower, hasUpper, hasNumber, hasSymbol].filter(Boolean).length;
+      charCount.textContent = `${length} characters containing:`;
+
+      if (length === 0) {
+        strengthBar.textContent = 'No Password';
+        strengthBar.className = 'strength-bar weak';
+        review.innerHTML = `<p><strong>Review:</strong> No password entered.</p><p>Your password is too weak.</p>`;
+        crackTime.innerHTML = `Crack time: <strong>0 seconds</strong>`;
+        return;
+      }
+
+      if (length > 10 && types === 4) {
+        strengthBar.textContent = 'Strong';
+        strengthBar.className = 'strength-bar strong';
+        crackTime.innerHTML = `Crack time: <strong>centuries</strong>`;
+        review.innerHTML = `<p><strong>Review:</strong> Excellent password!</p><p>Very secure and hard to crack.</p>`;
+      } else if (length >= 8 && types >= 3) {
+        strengthBar.textContent = 'Medium';
+        strengthBar.className = 'strength-bar medium';
+        crackTime.innerHTML = `Crack time: <strong>days</strong>`;
+        review.innerHTML = `<p><strong>Review:</strong> Pretty good!</p><p>Consider adding more variety for better security.</p>`;
+      } else {
+        strengthBar.textContent = 'Weak';
+        strengthBar.className = 'strength-bar weak';
+        crackTime.innerHTML = `Crack time: <strong>seconds</strong>`;
+        review.innerHTML = `<p><strong>Review:</strong> Weak password.</p><p>Use longer passwords with mixed characters.</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
